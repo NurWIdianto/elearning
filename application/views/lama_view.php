@@ -23,9 +23,6 @@
           </tbody>
         </table>
       </div>
-      <div class="btn-group">
-        <a href="http://localhost/elearning/index.php/index/dosen" class="btn btn-warning" role="button">Kembali</a>
-      </div>
     </div>
     <div class="col-sm-4">
     </div>
