@@ -79,4 +79,6 @@ class Upload_model extends CI_Model{
 	}
 	//akhir insert ke table komentar
 
+	jkdshsd
+
 }
