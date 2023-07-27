@@ -78,7 +78,4 @@ class Upload_model extends CI_Model{
 		$this->link_komdos($id_kom,$npd);
 	}
 	//akhir insert ke table komentar
-
-	jkdshsd
-
 }
