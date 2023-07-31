@@ -2,11 +2,9 @@
 /**
  * 
  */
-class Upload_model extends CI_Model{	
-	public $mata_kuliah;
-	public $keterangan;
-	public $nama_file;	
-
+class Upload_model extends CI_Model{
+	public $npd;	
+	
 	//insert table upload
 	public function insert_upload(){
 		$sql = sprintf("INSERT INTO upload(keterangan,nama_file) values ('%s','%s')",
@@ -56,23 +54,33 @@ class Upload_model extends CI_Model{
 	}
 
 	// untuk menampilkan table upload
-	public function matkul22($npd,$id_mt){
-		$sql = sprintf("SELECT matkul.id_mt,matkul.nama,upload.nama_file,upload.keterangan,upload.nama_file 
-							FROM matkul join link_upload_matkul on (link_upload_matkul.id_mt=matkul.id_mt) 
-									join upload on (upload.id_up=link_upload_matkul.id_up) 
-									join link_upload_dosen on (upload.id_up=link_upload_dosen.id_up) 
-									join dosen on (link_upload_dosen.npd=dosen.npd) 
-										WHERE dosen.npd='%s' and matkul.id_mt='%s'",
-			$npd,
+	public function matkul22($id_mt){
+		$sql = sprintf("SELECT matkul.id_mt,matkul.nama,upload22.nama_file,upload22.keterangan 
+						from upload22 join matkul on(matkul.id_mt=upload22.id_mt)
+						where upload22.id_mt='%s'",
 			$id_mt);
 			$query = $this->db->query($sql);
 			return $query->result();
 	}
 	// akhir fungsi
 
+	//insert ke table upload
+	public function upload22($komentar,$nama_file,$npd,$id_mt){
+		$sql = sprintf("INSERT INTO upload22(keterangan,nama_file,npd,id_mt) values ('%s','%s','%s','%s')",
+						$komentar,
+						$nama_file,
+						$npd,
+						$id_mt);
+		$this->db->query($sql);
+	}
+	// akhir fungsi
+
 	// insert ke table komentar
 	public function komentar22($npd,$id_mt,$id_kom,$nama,$komentar,$status){
-		$sql = sprintf("INSERT INTO komentar values ('%s','%s','%s','%s')",$id_kom,$nama,$komentar,$status);
+		$sql = sprintf("INSERT INTO komentar values ('%s','%s','%s','%s')",
+						$id_kom,
+						$nama,
+						$komentar,$status);
 		$this->db->query($sql);
 		$this->link_komat($id_kom,$id_mt);
 		$this->link_komdos($id_kom,$npd);

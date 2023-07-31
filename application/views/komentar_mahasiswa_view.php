@@ -75,36 +75,36 @@
             <h1 class="text-center">Komentar</h1>
             <div class="row">
             <?php
-            foreach ($komentar as $row) {
-            if ($row->status == "dosen") {
+            //foreach ($komentar as $row) {
+            //if ($row->status == "dosen") {
             ?>
             <hr>
             <div class="media">
             <div class="media-left media-top">
-            <img src="<?php echo base_url(); ?>./assests/image/avatar.png"  style="width:60px">
+            <img src="<?php //echo base_url(); ?>./assests/image/avatar.png"  style="width:60px">
             </div>
             <div class="media-body">
             <h4 class="media-heading text-capitalize"><?php   echo $row->nama; ?></h4>
-            <p><?php  echo $row->komentar; ?></p>
+            <p><?php  //echo $row->komentar; ?></p>
             </div>
             </div>
             <br>
             <br>
-            <?php }else{ ?>
+            <?php //}else{ ?>
             <hr>
             <div class="media">
             <div class="media-right media-body">
             <h4 class="media-heading text-right text-capitalize"><?php   echo $row->nama; ?></h4>
-            <p class="text-right"><?php  echo $row->komentar; ?></p>
+            <p class="text-right"><?php  //echo $row->komentar; ?></p>
             </div>
             <div class="media-right media-top">
-            <img src="<?php echo base_url(); ?>./assests/image/avatar.png"  style="width:60px">
+            <img src="<?php //echo base_url(); ?>./assests/image/avatar.png"  style="width:60px">
             </div>
             </div>
             <br>
             <br>
-            <?php } ?>
-            <?php   }; ?>
+            <?php //} ?>
+            <?php   //}; ?>
             </div>
           </div>
         </div>

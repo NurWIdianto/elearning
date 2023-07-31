@@ -87,14 +87,10 @@ class Login_model extends CI_Model{
 
 
 	// untuk menampilkan table upload
-	public function matkul($npd,$id_mt){
-		$sql = sprintf("SELECT matkul.id_mt,matkul.nama,upload.nama_file,upload.keterangan,upload.nama_file 
-							FROM matkul join link_upload_matkul on (link_upload_matkul.id_mt=matkul.id_mt) 
-									join upload on (upload.id_up=link_upload_matkul.id_up) 
-									join link_upload_dosen on (upload.id_up=link_upload_dosen.id_up) 
-									join dosen on (link_upload_dosen.npd=dosen.npd) 
-										WHERE dosen.npd='%s' and matkul.id_mt='%s'",
-			$npd,
+	public function matkul($id_mt){
+		$sql = sprintf("SELECT matkul.id_mt,matkul.nama,upload22.nama_file,upload22.keterangan 
+						from upload22 join matkul on(matkul.id_mt=upload22.id_mt)
+						where upload22.id_mt='%s'",
 			$id_mt);
 			$query = $this->db->query($sql);
 			return $query->result();
