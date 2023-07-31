@@ -3,16 +3,20 @@
   <div class="container">
       <!-- style="background-color:rgb(255, 0, 0); -->
       <div class="col-sm-6">
-        <h2 class="text-center">Keterangan</h2>
+        <?php
+          foreach ($lihat_matkul as $key) {
+        ?>
+        <h2 class="text-center"><?php echo $key->nama;?></h2>
+      <?php } ?>
         <div class="table-responsive">          
           <table class="table table-bordered">
             <thead>
-            <tr>
-            <th class="text-center">Mata Kuliah</th>
-            <th class="text-center">Keterangan</th>
-            <th class="text-center">Nama File</th>
-            <th class="text-center">Download</th>
-            </tr>
+              <tr>
+                <th class="text-center">Mata Kuliah</th>
+                <th class="text-center">Keterangan</th>
+                <th class="text-center">Nama File</th>
+                <th class="text-center">Download</th>
+              </tr>
             </thead>
             <tbody>
             <?php
