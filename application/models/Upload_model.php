@@ -5,31 +5,6 @@
 class Upload_model extends CI_Model{
 	public $npd;	
 	
-	//insert table upload
-	public function insert_upload(){
-		$sql = sprintf("INSERT INTO upload(keterangan,nama_file) values ('%s','%s')",
-			$this->keterangan,
-			$this->nama_file
-		);
-		$this->db->query($sql);
-	}
-
-	//insert link_upload_dosen
-	public function insert_upload2($id_up,$npd){
-		$sql = sprintf("INSERT INTO link_upload_dosen(id_up,npd) values ('%s','%s')",
-			$id_up,
-			$npd
-		);
-		$this->db->query($sql);
-	}
-
-	public function insert_upload3($id_up,$id_mt){
-		$sql = sprintf("INSERT INTO link_upload_matkul(id_up,id_mt) values ('%s','%s')",
-			$id_up,
-			$id_mt
-		);
-		$this->db->query($sql);
-	}
 
 	//lihat matakuliah
 	public function lihat_matkul11($id_mt){
@@ -46,12 +21,6 @@ class Upload_model extends CI_Model{
 		return $config;
 	}
 
-	//lihat id terakhir
-	public function lihat_id_terakhir(){
-		$sql = sprintf("select last_insert_id() as terakhir");
-		$query = $this->db->query($sql);
-		return $query->result();
-	}
 
 	// untuk menampilkan table upload
 	public function matkul22($id_mt){

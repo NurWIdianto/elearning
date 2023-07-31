@@ -51,12 +51,6 @@ class Login_model extends CI_Model{
 		return $query->result();
 	}
 
-	//funsi untuk menampiklan mata muliah
-	public function lihat_matkul($id_mt){
-		$sql = sprintf("select matkul.nama from matkul where id_mt ='%s'",$id_mt);
-		$query = $this->db->query($sql);
-		return $query->result();
-	}
 
 	// fungsi untuk menampilkan matakuliah
 	public function upload_dosen($npd){

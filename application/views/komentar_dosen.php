@@ -4,26 +4,22 @@
       <!-- style="background-color:rgb(255, 0, 0); -->
       <div class="col-sm-6">
         <?php
-          foreach ($lihat_matkul as $key) {
+            foreach ($matkul as $row) {
         ?>
-        <h2 class="text-center"><?php echo $key->nama;?></h2>
-      <?php } ?>
+        <h2 class="text-center"><?php echo $row->nama;?></h2>
+      
         <div class="table-responsive">          
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th class="text-center">Mata Kuliah</th>
                 <th class="text-center">Keterangan</th>
                 <th class="text-center">Nama File</th>
                 <th class="text-center">Download</th>
               </tr>
             </thead>
             <tbody>
-            <?php
-            foreach ($matkul as $row) {
-            ?>
+            
             <tr>
-              <td class="text-center"><?php echo $row->nama; ?></td>
               <td class="text-center"><?php echo $row->keterangan; ?></td>
               <td class="text-center"><?php echo $row->nama_file; ?></td>
               <td class="text-center">

@@ -105,12 +105,11 @@ class Index extends CI_Controller{
 		if($this->session->has_userdata('username')==NULL){
 			redirect('index/index');
 		}else{
-			$lihat_matkul = $this->model->lihat_matkul($id_mt);
 			$npd = $this->session->userdata('nomor');
 			$mat_kul = $this->model->matkul($id_mt);
 			//$komentar = $this->model->tampil_komentar($npd,$id_mt);
 			$this->load->view('header');
-			$this->load->view('komentar_dosen',['lihat_matkul'=>$lihat_matkul,'matkul'=>$mat_kul,'id_mt'=>$id_mt]);
+			$this->load->view('komentar_dosen',['matkul'=>$mat_kul,'id_mt'=>$id_mt]);
 			$this->load->view('footer');
 		}		
 	}
@@ -125,12 +124,11 @@ class Index extends CI_Controller{
 		$nama = $this->session->userdata('username');
 		if(isset($_POST['btnsubmit'])){
 			$komentar = $_POST['komentar'];
-			$lihat_matkul = $this->model->lihat_matkul($id_mt);
 			$this->model->komentar($npd,$id_mt,$id_kom,$nama,$komentar,$status);
 			$mat_kul = $this->model->matkul($npd,$id_mt);
 			$komentar = $this->model->tampil_komentar($npd,$id_mt);
 			$this->load->view('header');
-			$this->load->view('komentar_dosen',['lihat_matkul'=>$lihat_matkul,'matkul'=>$mat_kul,'komentar'=>$komentar]);
+			$this->load->view('komentar_dosen',['matkul'=>$mat_kul,'komentar'=>$komentar]);
 			$this->load->view('footer');
 		}else{
 			$this->komentar_dosen($id_mt);

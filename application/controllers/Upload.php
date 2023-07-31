@@ -32,7 +32,7 @@ class Upload extends CI_Controller{
 					$mat_kul = $this->model->matkul22($id_mt);
 					echo "<script>alert('Upload File Berhasil')</script>";
 					$this->load->view('header');
-					$this->load->view('komentar_dosen',['lihat_matkul'=>$nama_matakuliah,'matkul'=>$mat_kul,'id_mt'=>$id_mt]);
+					$this->load->view('komentar_dosen',['matkul'=>$mat_kul,'id_mt'=>$id_mt]);
 					$this->load->view('footer');
 				}else{
 					echo '<script>alert("File GAGAL di upload")</script>';
