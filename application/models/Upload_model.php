@@ -8,7 +8,7 @@ class Upload_model extends CI_Model{
 
 	//lihat matakuliah
 	public function lihat_matkul11($id_mt){
-		$sql = sprintf("select matkul.nama from matkul where id_mt ='%s'",$id_mt);
+		$sql = sprintf("select nama from matkul where id_mt ='%s'",$id_mt);
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
@@ -23,10 +23,19 @@ class Upload_model extends CI_Model{
 
 
 	// untuk menampilkan table upload
-	public function matkul22($id_mt){
-		$sql = sprintf("SELECT matkul.id_mt,matkul.nama,upload22.nama_file,upload22.keterangan 
-						from upload22 join matkul on(matkul.id_mt=upload22.id_mt)
-						where upload22.id_mt='%s'",
+	public function matkul22($id_mt,$npd){
+		$sql = sprintf("SELECT nama_file,keterangan from upload22
+				where id_mt='%s' and npd='%s'",
+					$id_mt,
+					$npd);
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
+	// akhir fungsi
+
+	// untuk menampilkan nama mata kuliah
+	public function lihat_matkul($id_mt){
+		$sql = sprintf("SELECT nama from matkul where id_mt='%s'",
 			$id_mt);
 			$query = $this->db->query($sql);
 			return $query->result();

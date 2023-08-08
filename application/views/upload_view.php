@@ -9,7 +9,7 @@
         </div>
         <div class="col-75">
             <?php
-              foreach ($nama_matakuliah as $row) {
+              foreach ($matkul as $row) {
             ?>
           <input type="text" id="fname" name="mata_kuliah" placeholder="<?php echo $row->nama; ?>" required autocomplete="off" readonly>
             <?php } ?>

@@ -17,8 +17,6 @@
             ?>
             <tr>
               <td class="text-center"><?php echo $row->nama; ?></td>
-              <!-- untuk dowload -->
-              <!-- <td><a href="http://localhost/elearning/index.php/index/download_matkul/<?php echo $row->id_mt; ?>" class="btn btn-success" role="button">Lihat</a></td> -->
               <td class="text-center"><a href="http://localhost/elearning/index.php/index/komentar_dosen/<?php echo $row->id_mt; ?>" class="btn btn-success" role="button">Lihat</a></td>
             </tr>          
             <?php } ?>

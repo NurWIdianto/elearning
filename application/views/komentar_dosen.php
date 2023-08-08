@@ -4,10 +4,10 @@
       <!-- style="background-color:rgb(255, 0, 0); -->
       <div class="col-sm-6">
         <?php
-            foreach ($matkul as $row) {
+            foreach ($nama_matkul as $row) {
         ?>
         <h2 class="text-center"><?php echo $row->nama;?></h2>
-      
+        <?php } ?>
         <div class="table-responsive">          
           <table class="table table-bordered">
             <thead>
@@ -18,8 +18,10 @@
               </tr>
             </thead>
             <tbody>
-            
             <tr>
+              <?php
+                    foreach ($matkul as $row) {
+                ?>
               <td class="text-center"><?php echo $row->keterangan; ?></td>
               <td class="text-center"><?php echo $row->nama_file; ?></td>
               <td class="text-center">

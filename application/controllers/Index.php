@@ -106,10 +106,10 @@ class Index extends CI_Controller{
 			redirect('index/index');
 		}else{
 			$npd = $this->session->userdata('nomor');
-			$mat_kul = $this->model->matkul($id_mt);
-			//$komentar = $this->model->tampil_komentar($npd,$id_mt);
+			$mat_kul = $this->model->matkul($id_mt,$npd);
+			$nama_matkul = $this->model->lihat_matkul($id_mt);
 			$this->load->view('header');
-			$this->load->view('komentar_dosen',['matkul'=>$mat_kul,'id_mt'=>$id_mt]);
+			$this->load->view('komentar_dosen',['nama_matkul'=>$nama_matkul,'matkul'=>$mat_kul,'id_mt'=>$id_mt]);
 			$this->load->view('footer');
 		}		
 	}
@@ -153,29 +153,23 @@ class Index extends CI_Controller{
 
 	//fungsi untuk menampilkan form upload
 	public function upload(){
-		// $this->session->set_userdata('id_mt',$id_mt);
 		if($this->session->has_userdata('nomor')==NULL){
 			redirect('index/index');
 		}else{
-			// $npd = $this->session->userdata('nomor');
 			$id_mt = $this->session->userdata('id_mt');
-			$nama_matakuliah = $this->model->lihat_matkul($id_mt);
-			// $komentar = $this->model->tampil_komentar($nama_dosen,$nama_file2);
+			$matkul = $this->model->lihat_matkul($id_mt);
 			$this->load->view('header');
-			$this->load->view('upload_view',['nama_matakuliah'=>$nama_matakuliah]);
+			$this->load->view('upload_view',['matkul'=>$matkul,'id_mt'=>$id_mt]);
 			$this->load->view('footer');
 		}	
 	}
 	// akhir fungsi reaksi button download pada button download di tampilan dosen
+
 	//fungsi untuk menampilkan form tambah matkul
 	public function tambah_matkul(){
-		// $this->session->set_userdata('id_mt',$id_mt);
 		if($this->session->has_userdata('nomor')==NULL){
 			redirect('index/index');
 		}else{
-			// $npd = $this->session->userdata('nomor');
-			// $mat_kul = $this->model->matkul($npd,$id_mt);
-			// $komentar = $this->model->tampil_komentar($nama_dosen,$nama_file2);
 			$this->load->view('header');
 			$this->load->view('tambah_matkul_view');
 			$this->load->view('footer');
