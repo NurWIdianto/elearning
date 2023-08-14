@@ -3,7 +3,7 @@ class Login_model extends CI_Model{
 	public $nomor;
 	public $pass;
 	public $status;
-		
+	public $npd;		
 	//untuk otentifikasi dosen 
 	public function otentikasi_dosen(){
 		$sql = sprintf("SELECT COUNT(*) AS cnt FROM dosen WHERE npd = '%s' AND pass = '%s'",$this->nomor,$this->pass);
@@ -37,24 +37,17 @@ class Login_model extends CI_Model{
 		return $result->nama;
 	}
 
-	// public function nama_session(){
-	// 	$data = [
- //        'name'  => $this->nama_login,
- //        'status'     => $this->status,
- //        ];
- //        return $data;
-	// }
-
+	//fungsi untuk melihat nama dosen
 	public function nama_dosen(){
 		$sql = sprintf("SELECT * from `dosen` ORDER by nama");
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
+	//akhir fungsi
 
 
 	// fungsi untuk menampilkan matakuliah
 	public function upload_dosen($npd){
-		//$sql = sprintf("select a.id_mt,a.nama from matkul a,link_matkul_dosen b where a.id_mt=b.id_mt and b.npd='%s'",
 		$sql = sprintf("select matkul.id_mt,matkul.nama from matkul join link_matkul_dosen on ( matkul.id_mt=link_matkul_dosen.id_mt and link_matkul_dosen.npd='%s')",
 		$npd);
 		$query = $this->db->query($sql);
@@ -92,11 +85,41 @@ class Login_model extends CI_Model{
 	// akhir fungsi
 
 	// untuk menampilkan nama mata kuliah
-	public function 	lihat_matkul($id_mt){
+	public function lihat_matkul($id_mt){
 		$sql = sprintf("SELECT nama from matkul where id_mt='%s'",
 			$id_mt);
 			$query = $this->db->query($sql);
 			return $query->result();
+	}
+	// akhir fungsi
+
+	//untuk upload ke folder yang dituju
+	public function konfigurasi(){
+		$config =['upload_path' => "./upload/$this->npd/",
+		'allowed_types' => "doc|ppt|avi|3gp",
+		'max_size' => "200000000000000000"];
+		return $config;
+	}
+
+	//insert ke table upload
+	public function upload22($komentar,$nama_file,$npd,$id_mt){
+		$sql = sprintf("INSERT INTO upload22(keterangan,nama_file,npd,id_mt) values ('%s','%s','%s','%s')",
+						$komentar,
+						$nama_file,
+						$npd,
+						$id_mt);
+		$this->db->query($sql);
+	}
+	// akhir fungsi
+
+	// untuk menampilkan table upload
+	public function matkul22($id_mt,$npd){
+		$sql = sprintf("SELECT nama_file,keterangan from upload22
+				where id_mt='%s' and npd='%s'",
+					$id_mt,
+					$npd);
+		$query = $this->db->query($sql);
+		return $query->result();
 	}
 	// akhir fungsi
 

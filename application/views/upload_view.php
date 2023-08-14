@@ -2,7 +2,7 @@
 <div class="content-dosen-upload">
   <div class="container">
     <h2 class="text-center">Form Upload File</h2>
-    <form action="http://localhost/elearning/index.php/upload" method="post" enctype="multipart/form-data">
+    <form action="http://localhost/elearning/index.php/proses_upload" method="post" enctype="multipart/form-data">
       <div class="row">
         <div class="col-25">
           <label for="fname">Mata Kuliah</label>
