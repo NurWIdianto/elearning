@@ -143,10 +143,8 @@ class Index extends CI_Controller{
 			redirect('index/index');
 		}else{
 			$npd = $this->session->userdata('nomor');
-			//$upload_dosen = $this->model->upload_dosen($nama_dosen);
 			$data = file_get_contents("upload/$npd/".$nama_file);
 			force_download($nama_file,$data);
-			// $this->load->view('dosen',['upload_dosen'=>$upload_dosen]);	
 		}		
 	}
 	// akhir fungsi reaksi button download pada button download di tampilan dosen
@@ -177,7 +175,7 @@ class Index extends CI_Controller{
 				if($this->upload->do_upload()){
 					$nama_file = $this->upload->data('file_name');
 					$this->model->upload22($keterangan,$nama_file,$nomor,$id_mt);//insert table upload22
-					$mat_kul = $this->model->matkul22($id_mt,$nomor);//menampilkan tabe uplod22
+					$mat_kul = $this->model->matkul22($id_mt,$nomor);//menampilkan table uplod22
 					echo "<script>alert('Upload File Berhasil')</script>";
 					$this->load->view('header');
 					$this->load->view('komentar_dosen',['nama_matkul'=>$nama_matakuliah,'matkul'=>$mat_kul,'id_mt'=>$id_mt]);
