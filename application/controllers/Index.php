@@ -161,8 +161,9 @@ class Index extends CI_Controller{
 			$this->load->view('footer');
 		}	
 	}
-	// akhir fungsi reaksi button download pada button download di tampilan dosen
+	// akhir fungsi 
 
+	//jika tombol upload di tekan
 	public function proses_upload(){
 		$id_mt = $this->session->userdata('id_mt');
 		$nomor = $this->session->userdata('nomor');
@@ -189,6 +190,7 @@ class Index extends CI_Controller{
 				
 			}
 	}
+	//proses upload
 
 	//fungsi untuk menampilkan form tambah matkul
 	public function tambah_matkul(){
