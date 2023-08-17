@@ -56,7 +56,7 @@
           </div>
           <br>
           <div class="row">
-             <p>Tidak punya <a href="http://localhost/elearning/index.php/register" class="btn btn-info btn-sm">
+             <p>Tidak punya <a href="http://localhost/elearning/index.php/index/proses_registrasi" class="btn btn-info btn-sm">
               <span class="glyphicon glyphicon-registration-mark"></span> Daftar
             </a></p>
           </div>

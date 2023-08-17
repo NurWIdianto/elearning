@@ -35,7 +35,7 @@
             <p>Sudah punya akun <a href="http://localhost/elearning" class="btn btn-primary navbar-btn">LOGIN</a></p>
           </div>
         </div>
-        <form action="http://localhost/elearning/index.php/register/index" method="post">
+        <form action="http://localhost/elearning/index.php/index/proses_registrasi" method="post">
           <div class="row">
             <div class="col-25">
               <label for="status">Status</label>
@@ -45,14 +45,6 @@
                 <option value="mahasiswa">Mahasiswa</option>
                 <option value="dosen">Dosen</option>
               </select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-25">
-              <label for="fname">NIP/NPM</label>
-            </div>
-            <div class="col-75">
-              <input type="text" id="nomor" name="nomor" value="<?php  echo $npm;?>" required autocomplete="off" readonly>
             </div>
           </div>
           <div class="row">

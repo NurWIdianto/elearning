@@ -232,8 +232,10 @@ class Index extends CI_Controller{
 		if($this->session->has_userdata('username')==NULL){
 			redirect('index/index');
 		}elseif ($status == "mahasiswa") {
-			$rows = $this->model->nama_dosen();
-			$this->load->view('mahasiswa',['rows'=>$rows]);		
+			$matkul_dipilih = $this->model->lihat_matkul_mahasiswa();
+			$this->load->view('header_mahasiswa');
+			$this->load->view('mahasiswa_lihat_matkul',['matkul_dipilih'=>$matkul_dipilih]);
+			$this->load->view('footer');		
 		}			
 	}
 	// akhir fungsi untuk tampilan mahasiswa 
@@ -318,25 +320,33 @@ class Index extends CI_Controller{
 	}
 	// akhir fungsi jika button logout pada navbar ditekan
 
-	// public function __remap($segmen_kedua){
-	// 	if(isset($segmen_kedua)){
-	// 		switch (strtolower($segmen_kedua)) {
-	// 			case 'dosen':
-	// 				$this->load->view('dosen');
-	// 				break;
-	// 			case 'mahasiswa':
-	// 				$this->load->view('mahasiswa');
-	// 				break;
-	// 			case 'download_matkul':
-	// 				$this->load->view('dosen');
-	// 				break;
-	// 			case 'komentar_dosen':
-	// 				$this->load->view('komentar_dosen');
-	// 				break;				
-	// 			default:
-	// 			 	$this->index();
-	// 			 	break;
-	// 		}
-	// 	}
-	// }
+	//funsi registrasi
+	public function proses_registrasi(){
+		if(isset($_POST['btnsubmit'])){
+			$status = $_POST['status'];	
+			$nama = $_POST['nama'];
+			$pass = $_POST['pass'];
+			$nomor = "";
+			if($status == "dosen"){
+				 $nama=$this->model->nama;
+				 $config = "./upload/$nama/";
+				 mkdir($config, 0777, TRUE);
+				 $this->model->insert_dosen();
+				echo "<script>alert('$pesan')</script>";
+				$this->load->view('register_view');
+			}else{
+				$nomor = $this->model->insert_mahasiswa($nama,$pass);
+				foreach ($nomor as $row) {
+					$nomor2=$row->mahasiswa;
+				};
+				$pesan = 'Registrasi Berhasil\\nNomor : '.$nomor2.'\\nPassword : '.$pass.'\\nMohon difoto atau screenshot untuk keperluan login';
+				echo "<script>alert('$pesan')</script>";
+				$this->load->view('register_view');
+			}
+		}else{
+			$this->load->view('register_view');	
+		}
+		
+	}
+	//akhir funsi
 }

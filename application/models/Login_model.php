@@ -123,6 +123,45 @@ class Login_model extends CI_Model{
 	}
 	// akhir fungsi
 
+	//registrasi
+	//fungsi untuk insert table dosen
+	public function insert_dosen(){
+		$sql = sprintf("INSERT INTO dosen VALUES ('%s','%s')",
+			$this->nama,
+			$this->pass
+		);
+		$this->db->query($sql);
+	}
+	//akhir fungsi
+
+	//fungsi insert table mahasista
+	public function insert_mahasiswa($nama,$pass){
+		$sql = sprintf("INSERT INTO mahasiswa (nama,pass) VALUES ('%s','%s')",
+			$nama,
+			$pass
+		);
+		$this->db->query($sql);
+		$sql2 = sprintf("select last_insert_id() as mahasiswa");
+		$query = $this->db->query($sql2);
+		return $query->result();
+	}
+	//akhir fungsi
+
+	//fungsi insert table mahasista
+	public function lihat_matkul_mahasiswa($npm){
+		$sql = sprintf("select matkul.nama,dosen.nama from matkul
+						join link_mahasiswa_matkul_dosen on (matkul.id_mt=link_mahasiswa_matkul_dosen.id_mt)
+    					join dosen on (dosen.npd=link_mahasiswa_matkul_dosen.npd)
+    					join mahasiswa on (mahasiswa.npm=link_mahasiswa_matkul_dosen.npm)
+						where mahasiswa.npm='%s')",
+			$npm
+		);
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
+	//akhir fungsi
+
+
 	// insert ke table komentar
 	public function komentar($npd,$id_mt,$id_kom,$nama,$komentar,$status){
 		$sql = sprintf("INSERT INTO komentar values ('%s','%s','%s','%s')",$id_kom,$nama,$komentar,$status);
