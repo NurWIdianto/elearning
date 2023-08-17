@@ -149,11 +149,11 @@ class Login_model extends CI_Model{
 
 	//fungsi insert table mahasista
 	public function lihat_matkul_mahasiswa($npm){
-		$sql = sprintf("select matkul.nama,dosen.nama from matkul
+		$sql = sprintf("select matkul.nama as nama_matakuliah,dosen.nama from matkul
 						join link_mahasiswa_matkul_dosen on (matkul.id_mt=link_mahasiswa_matkul_dosen.id_mt)
     					join dosen on (dosen.npd=link_mahasiswa_matkul_dosen.npd)
     					join mahasiswa on (mahasiswa.npm=link_mahasiswa_matkul_dosen.npm)
-						where mahasiswa.npm='%s')",
+						where mahasiswa.npm='%s'",
 			$npm
 		);
 		$query = $this->db->query($sql);

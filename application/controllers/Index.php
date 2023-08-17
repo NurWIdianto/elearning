@@ -229,12 +229,13 @@ class Index extends CI_Controller{
 	// fungsi untuk tampilan mahasiswa 
 	public function mahasiswa(){
 		$status = $this->session->userdata('status');
+		$npm = $this->session->userdata('nomor');
 		if($this->session->has_userdata('username')==NULL){
 			redirect('index/index');
 		}elseif ($status == "mahasiswa") {
-			$matkul_dipilih = $this->model->lihat_matkul_mahasiswa();
+			$matkul_dipilih = $this->model->lihat_matkul_mahasiswa($npm);
 			$this->load->view('header_mahasiswa');
-			$this->load->view('mahasiswa_lihat_matkul',['matkul_dipilih'=>$matkul_dipilih]);
+			$this->load->view('mahasiswa_lihat_matkul',['matkul_dipilih'=>$matkul_dipilih,'npm'=>$npm]);
 			$this->load->view('footer');		
 		}			
 	}
