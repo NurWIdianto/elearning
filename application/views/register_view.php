@@ -38,13 +38,9 @@
         <form action="http://localhost/elearning/index.php/index/proses_registrasi" method="post">
           <div class="row">
             <div class="col-25">
-              <label for="status">Status</label>
             </div>
             <div class="col-75">
-              <select id="status" name="status">
-                <option value="mahasiswa">Mahasiswa</option>
-                <option value="dosen">Dosen</option>
-              </select>
+                <h3>Form Pendaftaran Mahasiswa Baru</h3>
             </div>
           </div>
           <div class="row">

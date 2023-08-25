@@ -324,30 +324,18 @@ class Index extends CI_Controller{
 	//funsi registrasi
 	public function proses_registrasi(){
 		if(isset($_POST['btnsubmit'])){
-			$status = $_POST['status'];	
 			$nama = $_POST['nama'];
 			$pass = $_POST['pass'];
-			$nomor = "";
-			if($status == "dosen"){
-				 $nama=$this->model->nama;
-				 $config = "./upload/$nama/";
-				 mkdir($config, 0777, TRUE);
-				 $this->model->insert_dosen();
+			$nomor = $this->model->insert_mahasiswa($nama,$pass);
+			foreach ($nomor as $row) {
+				$nomor2=$row->mahasiswa;
+			};
+			$pesan = 'Registrasi Berhasil\\nNomor : '.$nomor2.'\\nPassword : '.$pass.'\\nMohon difoto atau screenshot untuk keperluan login';
 				echo "<script>alert('$pesan')</script>";
 				$this->load->view('register_view');
-			}else{
-				$nomor = $this->model->insert_mahasiswa($nama,$pass);
-				foreach ($nomor as $row) {
-					$nomor2=$row->mahasiswa;
-				};
-				$pesan = 'Registrasi Berhasil\\nNomor : '.$nomor2.'\\nPassword : '.$pass.'\\nMohon difoto atau screenshot untuk keperluan login';
-				echo "<script>alert('$pesan')</script>";
-				$this->load->view('register_view');
-			}
-		}else{
-			$this->load->view('register_view');	
 		}
-		
+		else
+			$this->load->view('register_view');
 	}
 	//akhir funsi
 }
