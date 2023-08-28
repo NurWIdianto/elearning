@@ -99,43 +99,7 @@ class Index extends CI_Controller{
 	}
 	// akhir fungsi untuk tampilan dosen
 
-	// fungsi untuk menampilkan tampilan komentar
-	public function komentar_dosen($id_mt){
-		$this->session->set_userdata('id_mt',$id_mt);
-		if($this->session->has_userdata('username')==NULL){
-			redirect('index/index');
-		}else{
-			$npd = $this->session->userdata('nomor');
-			$mat_kul = $this->model->matkul($id_mt,$npd);
-			$nama_matkul = $this->model->lihat_matkul($id_mt);
-			$this->load->view('header');
-			$this->load->view('komentar_dosen',['nama_matkul'=>$nama_matkul,'matkul'=>$mat_kul,'id_mt'=>$id_mt]);
-			$this->load->view('footer');
-		}		
-	}
-	// akhir fungsi untuk menampilkan tampilan komentar
-
-	// fungsi jika button kirim pada tampilan komentar ditekan
-	public function komentar_dosen2(){
-		$id_mt = $this->session->userdata('id_mt');
-		$npd = $this->session->userdata('nomor');
-		$id_kom = $this->model->id_kom();
-		$status = $this->session->userdata('status');
-		$nama = $this->session->userdata('username');
-		if(isset($_POST['btnsubmit'])){
-			$komentar = $_POST['komentar'];
-			$this->model->komentar($npd,$id_mt,$id_kom,$nama,$komentar,$status);
-			$mat_kul = $this->model->matkul($npd,$id_mt);
-			$komentar = $this->model->tampil_komentar($npd,$id_mt);
-			$this->load->view('header');
-			$this->load->view('komentar_dosen',['matkul'=>$mat_kul,'komentar'=>$komentar]);
-			$this->load->view('footer');
-		}else{
-			$this->komentar_dosen($id_mt);
-		}
-	}
-	// akhir fungsi jika button kirim pada tampilan komentar ditekan
-
+	
 	//DOWNLOAD DOSEN
 	// fungsi reaksi button download pada button download di tampilan dosen
 	public function download_matkul($nama_file){
@@ -202,27 +166,85 @@ class Index extends CI_Controller{
 			$this->load->view('footer');
 		}	
 	}
+
+	// fungsi jika tombol tambah ditekan
+	// pada tambah matkul lama
+	public function tambah_matkul_baru(){
+		if($this->session->has_userdata('nomor')==NULL){
+			redirect('index/index');
+		}else{
+		$nomor = $this->session->userdata('nomor');
+			if(isset($_POST['btnsubmit'])){
+				$nama_matkul = $_POST['nama'];
+				$coba=$this->model->proses_tambah_matkul_baru($nama_matkul,$nomor);
+				echo "<script>alert('Tambah Mata Kuliah Berhasil')</script>";
+				$this->dosen();
+			}
+		}
+	}
+	// akhir fungsi
+
 	//fungsi untuk menampilkan form tambah matkul
 	public function tambah_matkul_lama(){
 		if($this->session->has_userdata('nomor')==NULL){
 			redirect('index/index');
 		}else{
-			$matkul = $this->model->matkul_lama();
+			$nomor = $this->session->userdata('nomor');
+			$matkul = $this->model->matkul_lama($nomor);
 			$this->load->view('header');
 			$this->load->view('lama_view',['matkul'=>$matkul]);
 			$this->load->view('footer');
 		}	
 	}
 	// akhir fungsi
-	// fungsi jika tombol tambah ditekan
-	// pada tambah matkul lama
+
 	public function tambah_lama_respon($id_mt){
-		$nomor = $this->session->userdata('nomor');
-		$this->model->tambah_lama($id_mt,$nomor);
-		echo "<script>alert('Tambah Mata kuliah berhasil !!!')</script>";
-		$this->tambah_matkul_lama();
+		if($this->session->has_userdata('nomor')==NULL){
+			redirect('index/index');
+		}else{
+			$nomor = $this->session->userdata('nomor');
+			$this->model->tambah_lama($id_mt,$nomor);
+			"<script>alert(Mata Kuliah telah ditambahkan)</script>";
+			$this->dosen();
+		}
 	}
-	// akhir fungsi
+	
+	// fungsi untuk menampilkan tampilan komentar
+	public function komentar_dosen($id_mt){
+		$this->session->set_userdata('id_mt',$id_mt);
+		if($this->session->has_userdata('username')==NULL){
+			redirect('index/index');
+		}else{
+			$npd = $this->session->userdata('nomor');
+			$mat_kul = $this->model->matkul($id_mt,$npd);
+			$nama_matkul = $this->model->lihat_matkul($id_mt);
+			$this->load->view('header');
+			$this->load->view('komentar_dosen',['nama_matkul'=>$nama_matkul,'matkul'=>$mat_kul,'id_mt'=>$id_mt]);
+			$this->load->view('footer');
+		}		
+	}
+	// akhir fungsi untuk menampilkan tampilan komentar
+
+	// fungsi jika button kirim pada tampilan komentar ditekan
+	public function komentar_dosen2(){
+		$id_mt = $this->session->userdata('id_mt');
+		$npd = $this->session->userdata('nomor');
+		$id_kom = $this->model->id_kom();
+		$status = $this->session->userdata('status');
+		$nama = $this->session->userdata('username');
+		if(isset($_POST['btnsubmit'])){
+			$komentar = $_POST['komentar'];
+			$this->model->komentar($npd,$id_mt,$id_kom,$nama,$komentar,$status);
+			$mat_kul = $this->model->matkul($npd,$id_mt);
+			$komentar = $this->model->tampil_komentar($npd,$id_mt);
+			$this->load->view('header');
+			$this->load->view('komentar_dosen',['matkul'=>$mat_kul,'komentar'=>$komentar]);
+			$this->load->view('footer');
+		}else{
+			$this->komentar_dosen($id_mt);
+		}
+	}
+	// akhir fungsi jika button kirim pada tampilan komentar ditekan
 	// Akhir fungsi untuk dosen
 
 	// fungsi untuk mahasiswa

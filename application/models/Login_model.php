@@ -12,6 +12,11 @@ class Login_model extends CI_Model{
 		return $row['cnt'] == 1;
 	}
 
+	public function cek_dosen($username,$status){
+		$hasil = $username==NULL and status !="dosen";
+		return $hasil;
+	}
+
 	// untuk otentifikasi mahasiswa
 	public function otentikasi_mahasiswa(){
 		$sql = sprintf("SELECT COUNT(*) AS cnt FROM mahasiswa WHERE npm = '%s' AND pass = '%s'",$this->nomor,$this->pass);
@@ -56,9 +61,34 @@ class Login_model extends CI_Model{
 	// akhir fungsi
 
 	// untuk menampilkan list mata kuliah 
-	// yang sudah didaftarkan
 	public function matkul_lama(){
-		$sql = sprintf("select id_mt,nama from matkul");
+		$sql= sprintf("select * from matkul");
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
+	//akhir fungsi
+
+	public function proses_tambah_matkul_baru($nama_matkul,$nomor){
+		$sql = sprintf("insert into matkul(nama) values('%s')",$nama_matkul);
+		$query = $this->db->query($sql);
+		$sql2 = sprintf("select last_insert_id() as id_mt");
+		$query2 = $this->db->query($sql2);
+		$data = $query2->result();
+		foreach ($data as $row) {
+				$nomor2=$row->id_mt;
+		};
+		$sql3 = sprintf("insert into link_matkul_dosen(id_mt,npd) values('%s','%s')",$nomor2,$nomor);
+		$query3 = $this->db->query($sql3);
+	}
+
+	// untuk menampilkan list mata kuliah 
+	// yang belum didaftarkan
+	public function matkul_lama_mahsiswa($npm){
+		$sql = sprintf("select id_mt,nama from matkul
+						where id_mt not in (select matkul.id_mt from matkul
+						left join link_mahasiswa_matkul_dosen on (link_mahasiswa_matkul_dosen.id_mt=matkul.id_mt)
+							where link_mahasiswa_matkul_dosen.npm = %s)",
+		$npm);
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
