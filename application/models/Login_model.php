@@ -61,8 +61,11 @@ class Login_model extends CI_Model{
 	// akhir fungsi
 
 	// untuk menampilkan list mata kuliah 
-	public function matkul_lama(){
-		$sql= sprintf("select * from matkul");
+	public function matkul_lama($npd){
+		$sql= sprintf("select * from matkul where id_mt not in(select matkul.id_mt
+	from dosen join link_matkul_dosen on (link_matkul_dosen.npd=dosen.npd)
+			   join matkul on (link_matkul_dosen.id_mt=matkul.id_mt)
+			   where dosen.npd='%s')",$npd);
 		$query = $this->db->query($sql);
 		return $query->result();
 	}

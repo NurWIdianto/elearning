@@ -177,7 +177,7 @@ class Index extends CI_Controller{
 			if(isset($_POST['btnsubmit'])){
 				$nama_matkul = $_POST['nama'];
 				$coba=$this->model->proses_tambah_matkul_baru($nama_matkul,$nomor);
-				echo "<script>alert('Tambah Mata Kuliah Berhasil')</script>";
+				echo "<script>alert('Mata Kuliah telah ditambahkan')</script>";
 				$this->dosen();
 			}
 		}
@@ -204,7 +204,7 @@ class Index extends CI_Controller{
 		}else{
 			$nomor = $this->session->userdata('nomor');
 			$this->model->tambah_lama($id_mt,$nomor);
-			"<script>alert(Mata Kuliah telah ditambahkan)</script>";
+			echo "<script>alert('Mata Kuliah telah ditambahkan')</script>";
 			$this->dosen();
 		}
 	}
