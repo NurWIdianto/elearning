@@ -167,7 +167,7 @@ class Login_model extends CI_Model{
 	}
 	//akhir fungsi
 
-	//fungsi insert table mahasista
+	//fungsi insert table mahasiswa
 	public function insert_mahasiswa($nama,$pass){
 		$sql = sprintf("INSERT INTO mahasiswa (nama,pass) VALUES ('%s','%s')",
 			$nama,
@@ -180,19 +180,27 @@ class Login_model extends CI_Model{
 	}
 	//akhir fungsi
 
-	//fungsi insert table mahasista
+	//fungsi insert table mahasiswa
 	public function lihat_matkul_mahasiswa($npm){
 		$sql = sprintf("select matkul.nama as nama_matakuliah,dosen.nama from matkul
 						join link_mahasiswa_matkul_dosen on (matkul.id_mt=link_mahasiswa_matkul_dosen.id_mt)
     					join dosen on (dosen.npd=link_mahasiswa_matkul_dosen.npd)
     					join mahasiswa on (mahasiswa.npm=link_mahasiswa_matkul_dosen.npm)
 						where mahasiswa.npm='%s'",
-			$npm
-		);
+				$npm);
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
 	//akhir fungsi
+
+	public function lihat_pengajar($id_mt){
+		$sql = sprintf("select dosen.npd,dosen.nama from dosen
+						join link_matkul_dosen on (link_matkul_dosen.npd=dosen.npd)
+						where link_matkul_dosen.id_mt='%s'",
+				$id_mt);
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
 
 
 	// insert ke table komentar

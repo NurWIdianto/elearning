@@ -257,6 +257,31 @@ class Index extends CI_Controller{
 	}
 	// akhir fungsi untuk tampilan mahasiswa 
 
+	//fungsi untuk menampilkan semua matakuliah yang belum diambil
+	public function tambah_matkul_mahasiswa(){
+		if($this->session->has_userdata('nomor')==NULL){
+			redirect('index/index');
+		}else{
+			$nomor = $this->session->userdata('nomor');
+			$matkul = $this->model->matkul_lama($nomor);
+			$this->load->view('header');
+			$this->load->view('lama_mahasiwa_view',['matkul'=>$matkul]);
+			$this->load->view('footer');
+		}	
+	}
+
+	public function pilih_dosen($id_mt){
+		if($this->session->has_userdata('nomor')==NULL){
+			redirect('index/index');
+		}else{
+			$dosen = $this->model->lihat_pengajar($id_mt);
+			$matkul = $this->model->lihat_matkul($id_mt);
+			$this->load->view('header');
+			$this->load->view('mahasiswa',['matkul'=>$matkul,'dosen'=>$dosen]);
+			$this->load->view('footer');
+		}	
+	}
+
 	//fungsi untuk tampilan mata kuliah yang di ajar oleh dosen yan dipilih
 	public function matkul_mahasiswa($npd){
 		$this->session->set_userdata('npd',$npd);
