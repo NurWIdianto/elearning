@@ -196,53 +196,19 @@ class Login_model extends CI_Model{
 
 
 	// insert ke table komentar
-	public function komentar($npd,$id_mt,$id_kom,$nama,$komentar,$status){
-		$sql = sprintf("INSERT INTO komentar values ('%s','%s','%s','%s')",$id_kom,$nama,$komentar,$status);
+	public function komentar($id_mt, $npd, $status, $nama, $komentar){
+		$sql = sprintf("INSERT INTO komentar(id_mt, npd, status_komentar, nama, komentar)
+						 values ('%s','%s','%s','%s','%s')",
+						 	$id_mt, $npd, $status, $nama, $komentar);
 		$this->db->query($sql);
-		$this->link_komat($id_kom,$id_mt);
-		$this->link_komdos($id_kom,$npd);
 	}
 	//akhir insert ke table komentar
 
-	// fungsi untuk mengabil id_kom pada table komentar
-	// lalu ditambah 1
-	public function id_kom(){
-		$sql = sprintf("SELECT id_kom from `komentar`  ORDER BY id_kom DESC LIMIT 1");
-		$query = $this->db->query($sql);
-		// return $query->result();
-		foreach ($query->result_array() as $key ) {
-			$npd1 = $key['id_kom'];
-		}
-		$kalimat1 = substr($npd1, 0,3);
-		$kalimat2 = substr($npd1,3);
-		$kalimat3 = intval($kalimat2);
-		$kalimat4 = $kalimat2 + 1;
-		$kalimat5 = strlen($kalimat4);
-		if($kalimat5<2){
-			return $kalimat1.'0'.$kalimat4;
-		}else{
-			return $kalimat1.$kalimat4;
-		}
-	}
-	// akhir fungsi
 
-	//insert ke table link_komentar_matkul
-	public function link_komat($id_kom,$id_mt){
-		$sql = sprintf("INSERT INTO link_komentar_matkul values ('%s','%s')",$id_kom,$id_mt);
-		$this->db->query($sql);
-	}
-	// akhir fungsi
-
-	// insert ke table link_komentar_dosen
-	public function link_komdos($id_kom,$npd){
-		$sql = sprintf("INSERT INTO link_komentar_dosen values ('%s','%s')",$id_kom,$npd);
-		$this->db->query($sql);
-	}
-	// akhir fungsi
 
 	// untuk menampilkan komentar
 	public function tampil_komentar($npd,$id_mt){
-		$sql = sprintf("SELECT a.nama,a.komentar,a.status from komentar a,dosen b,matkul c,link_komentar_dosen d,link_komentar_matkul e WHERE a.id_kom=d.id_kom AND d.npd=b.npd AND a.id_kom=e.id_kom AND e.id_mt=c.id_mt AND b.npd='%s' AND c.id_mt='%s'",$npd,$id_mt);
+		$sql = sprintf("select * from komentar where npd='%s' and id_mt='%s'",$npd, $id_mt);
 		$query = $this->db->query($sql);
 		return	$query->result();
 	}

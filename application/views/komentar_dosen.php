@@ -39,7 +39,7 @@
             
           </div>
           <br>
-          <form class="form-inline" action="http://localhost/elearning/index.php/index/komentar_dosen2/" method="post">
+          <form class="form-inline" action="http://localhost/elearning/index.php/index/komentar_dosen2/<?php echo $id_mt; ?>" method="post">
             <div class="input-group">
               <input type="text" class="form-control input-lg" placeholder="Isikan Komentar...." name="komentar">
               <span class="input-group-btn">
@@ -49,11 +49,11 @@
           </form>
       </div>
       <br>
-      <!-- komentar masih error<div class="col-sm-6">
+      <div class="col-sm-6">
         <h2 class="text-center">Komentar</h2>
         <?php
         foreach ($komentar as $row) {
-          if ($row->status == "dosen") {
+          if ($row->status_komentar == "dosen") {
           ?>
           <hr>
           <div class="media">
@@ -82,7 +82,7 @@
           <br>
         <?php } ?>
         <?php   }; ?>        
-      </div>"-->
+      </div>
 
   </div>
 </div>

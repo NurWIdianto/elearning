@@ -142,9 +142,7 @@ class Index extends CI_Controller{
 					$this->model->upload22($keterangan,$nama_file,$nomor,$id_mt);//insert table upload22
 					$mat_kul = $this->model->matkul22($id_mt,$nomor);//menampilkan table uplod22
 					echo "<script>alert('Upload File Berhasil')</script>";
-					$this->load->view('header');
-					$this->load->view('komentar_dosen',['nama_matkul'=>$nama_matakuliah,'matkul'=>$mat_kul,'id_mt'=>$id_mt]);
-					$this->load->view('footer');
+					$this->komentar_dosen($id_mt);
 				}else{
 					echo '<script>alert("File GAGAL di upload")</script>';
 					$this->load->view('header');
@@ -218,8 +216,9 @@ class Index extends CI_Controller{
 			$npd = $this->session->userdata('nomor');
 			$mat_kul = $this->model->matkul($id_mt,$npd);
 			$nama_matkul = $this->model->lihat_matkul($id_mt);
+			$komentar = $this->model->tampil_komentar($npd,$id_mt);
 			$this->load->view('header');
-			$this->load->view('komentar_dosen',['nama_matkul'=>$nama_matkul,'matkul'=>$mat_kul,'id_mt'=>$id_mt]);
+			$this->load->view('komentar_dosen',['komentar'=>$komentar,'nama_matkul'=>$nama_matkul,'matkul'=>$mat_kul,'id_mt'=>$id_mt]);
 			$this->load->view('footer');
 		}		
 	}
@@ -229,24 +228,19 @@ class Index extends CI_Controller{
 	public function komentar_dosen2(){
 		$id_mt = $this->session->userdata('id_mt');
 		$npd = $this->session->userdata('nomor');
-		$id_kom = $this->model->id_kom();
 		$status = $this->session->userdata('status');
 		$nama = $this->session->userdata('username');
 		if(isset($_POST['btnsubmit'])){
 			$komentar = $_POST['komentar'];
-			$this->model->komentar($npd,$id_mt,$id_kom,$nama,$komentar,$status);
-			$mat_kul = $this->model->matkul($npd,$id_mt);
-			$komentar = $this->model->tampil_komentar($npd,$id_mt);
-			$this->load->view('header');
-			$this->load->view('komentar_dosen',['matkul'=>$mat_kul,'komentar'=>$komentar]);
-			$this->load->view('footer');
+			$this->model->komentar($id_mt, $npd, $status, $nama, $komentar);
+			$this->komentar_dosen($id_mt);
 		}else{
 			$this->komentar_dosen($id_mt);
 		}
 	}
 	// akhir fungsi jika button kirim pada tampilan komentar ditekan
 	// Akhir fungsi untuk dosen
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// fungsi untuk mahasiswa
 	// fungsi untuk tampilan mahasiswa 
 	public function mahasiswa(){
