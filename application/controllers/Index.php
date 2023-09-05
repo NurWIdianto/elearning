@@ -295,17 +295,44 @@ class Index extends CI_Controller{
 	}
 	//akhir fungsi untuk tampilan mata kuliah yang di ajar oleh dosen yan dipilih
 
-	// fungsi reaksi untuk tombol download pada tampilan matkul
-	public function download_matkul_mahasiswa($nama_file){
-		$this->session->set_userdata('nama_file',$nama_file);
+	public function komentar_mahasiswa22($npd,$id_mt){
+		$this->session->set_userdata('id_mt',$id_mt);
 		if($this->session->has_userdata('username')==NULL){
 			redirect('index/index');
 		}else{
-			$nama_dosen = $this->session->userdata('nama_dosen');
-			$upload_dosen = $this->model->upload_dosen($nama_dosen);
-			$data = file_get_contents("upload/$nama_dosen/".$nama_file);
+			$npm = $this->session->userdata('nomor');
+			$mat_kul = $this->model->matkul($id_mt,$npd);
+			$nama_matkul = $this->model->lihat_matkul($id_mt);
+			$nama_dosen = $this->model->lihat_dosen22($npd);
+			$komentar = $this->model->tampil_komentar($npd,$id_mt);
+			$this->load->view('header');
+			$this->load->view('komentar_mahasiswa_view',['komentar'=>$komentar,'nama_matkul'=>$nama_matkul,
+				'nama_dosen'=>$nama_dosen,'matkul'=>$mat_kul,'id_mt'=>$id_mt,'npd'=>$npd]);
+			$this->load->view('footer');
+		}		
+	}
+
+	// fungsi jika button kirim pada tampilan komentar ditekan
+	public function komentar_mahasiswa2($id_mt,$npd){
+		$status = $this->session->userdata('status');
+		$nama = $this->session->userdata('username');
+		if(isset($_POST['btnsubmit'])){
+			$komentar = $_POST['komentar'];
+			$this->model->komentar($id_mt, $npd, $status, $nama, $komentar);
+			$this->komentar_mahasiswa22($npd,$id_mt);
+		}else{
+			$this->komentar_mahasiswa22($npd,$id_mt);
+		}
+	}
+
+	// fungsi reaksi untuk tombol download pada tampilan matkul
+	public function download_matkul_mahasiswa($id_mt,$npd,$nama_file){
+		if($this->session->has_userdata('username')==NULL){
+			redirect('index/index');
+		}else{
+			$data = file_get_contents("upload/$npd/".$nama_file);
 			force_download($nama_file,$data);
-			$this->load->view('matkul_mahasiswa_view',['upload_dosen'=>$upload_dosen]);	
+			$this->komentar_mahasiswa2($id_mt,$npd);
 		}		
 	}
 	// akhir fungsi reaksi untuk tombol download pada tampilan matkul
@@ -326,7 +353,7 @@ class Index extends CI_Controller{
 	// akhir fungsi untuk menampilkan tampilan komentar
 
 	// fungsi jika button kirim pada tampilan komentar ditekan
-	public function komentar_mahasiswa2(){
+	/*public function komentar_mahasiswa2(){
 		$nama_file = $this->session->userdata('nama_file2');
 		$nama = $this->session->userdata('username');
 		$nama_dosen = $this->session->userdata('nama_dosen');
@@ -342,7 +369,7 @@ class Index extends CI_Controller{
 			$this->komentar_mahasiswa($nama_file);
 		}
 	
-	}
+	} */
 
 
 	// akhir fungsi jika button kirim pada tampilan komentar ditekan

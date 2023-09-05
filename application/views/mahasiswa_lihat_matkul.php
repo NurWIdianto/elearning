@@ -19,7 +19,7 @@
             <tr>
               <td class="text-center"><?php echo $row->nama_matakuliah; ?></td>
               <td class="text-center"><?php echo $row->nama; ?></td>
-              <td class="text-center"><a href="http://localhost/elearning/index.php/index/komentar_dosen/<?php echo $npm; ?>" class="btn btn-success" role="button">Lihat</a></td>
+              <td class="text-center"><a href="http://localhost/elearning/index.php/index/komentar_mahasiswa22/<?php echo $row->npd; ?>/<?php echo $row->id_mt; ?>" class="btn btn-success" role="button">Lihat</a></td>
             </tr>          
             <?php } ?>
           </tbody>
