@@ -193,6 +193,16 @@ class Login_model extends CI_Model{
 	}
 	//akhir fungsi
 
+	public function matkul_mahasiswa22($nomor){
+		$sql= sprintf("select * from matkul where id_mt not in (select matkul.id_mt from matkul
+	join link_mahasiswa_matkul_dosen on (link_mahasiswa_matkul_dosen.id_mt=matkul.id_mt)
+    join mahasiswa on (mahasiswa.npm=link_mahasiswa_matkul_dosen.npm)
+		where link_mahasiswa_matkul_dosen.npm = '%s')",$nomor);
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
+
+	//fungsi melihat pengajar
 	public function lihat_pengajar($id_mt){
 		$sql = sprintf("select dosen.npd,dosen.nama from dosen
 						join link_matkul_dosen on (link_matkul_dosen.npd=dosen.npd)
@@ -200,6 +210,14 @@ class Login_model extends CI_Model{
 				$id_mt);
 		$query = $this->db->query($sql);
 		return $query->result();
+	}
+
+	public function proses_tambah_matkul($nomor,$npd,$id_mt){
+		$sql =  sprintf("insert into link_mahasiswa_matkul_dosen(npm,npd,id_mt) values ('%s','%s','%s')",
+						$nomor,
+						$npd,
+						$id_mt);
+	 	$this->db->query($sql);
 	}
 
 

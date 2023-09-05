@@ -263,7 +263,7 @@ class Index extends CI_Controller{
 			redirect('index/index');
 		}else{
 			$nomor = $this->session->userdata('nomor');
-			$matkul = $this->model->matkul_lama($nomor);
+			$matkul = $this->model->matkul_mahasiswa22($nomor);
 			$this->load->view('header');
 			$this->load->view('lama_mahasiwa_view',['matkul'=>$matkul]);
 			$this->load->view('footer');
@@ -274,23 +274,23 @@ class Index extends CI_Controller{
 		if($this->session->has_userdata('nomor')==NULL){
 			redirect('index/index');
 		}else{
-			$dosen = $this->model->lihat_pengajar($id_mt);
-			$matkul = $this->model->lihat_matkul($id_mt);
+			$dosen = $this->model->lihat_pengajar($id_mt);//untuk melihat pengajar
+			$matkul = $this->model->lihat_matkul($id_mt);//untuk melihat nama matakuliah
 			$this->load->view('header');
-			$this->load->view('mahasiswa',['matkul'=>$matkul,'dosen'=>$dosen]);
+			$this->load->view('mahasiswa',['matkul'=>$matkul,'dosen'=>$dosen,'id_mt'=>$id_mt]);
 			$this->load->view('footer');
 		}	
 	}
 
 	//fungsi untuk tampilan mata kuliah yang di ajar oleh dosen yan dipilih
-	public function matkul_mahasiswa($npd){
-		$this->session->set_userdata('npd',$npd);
+	public function proses_pilih_matkul($npd,$id_mt){
 		if($this->session->has_userdata('username')==NULL){
 			redirect('index/index');
 		}else{			
-			$this->session->set_userdata('npd',$npd);
-			$upload_dosen = $this->model->upload_dosen($npd);
-			$this->load->view('matkul_mahasiswa_view',['upload_dosen'=>$upload_dosen]);			
+			$nomor = $this->session->userdata('nomor');
+			$this->model->proses_tambah_matkul($nomor, $npd, $id_mt);
+			echo "<script>alert('Mata Kuliah telah ditambahkan')</script>";
+			$this->mahasiswa();			
 		}	
 	}
 	//akhir fungsi untuk tampilan mata kuliah yang di ajar oleh dosen yan dipilih
