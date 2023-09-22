@@ -156,9 +156,11 @@ class Index extends CI_Controller{
 
 	//fungsi untuk menampilkan form tambah matkul
 	public function tambah_matkul(){
+		$nomor=$this->session->userdata('nomor');
 		if($this->session->has_userdata('nomor')==NULL){
-			redirect('index/index');
+			echo "<script>alert('nomor = $nomor')</script>";
 		}else{
+			echo "<script>alert('nomor = $nomor')</script>";
 			$this->load->view('header');
 			$this->load->view('tambah_matkul_view');
 			$this->load->view('footer');
@@ -215,7 +217,9 @@ class Index extends CI_Controller{
 		}else{
 			$npd = $this->session->userdata('nomor');
 			$mat_kul = $this->model->matkul($id_mt,$npd);
+			$this->db->reconnect();
 			$nama_matkul = $this->model->lihat_matkul($id_mt);
+			$this->db->reconnect();
 			$komentar = $this->model->tampil_komentar($npd,$id_mt);
 			$this->load->view('header');
 			$this->load->view('komentar_dosen',['komentar'=>$komentar,'nama_matkul'=>$nama_matkul,'matkul'=>$mat_kul,'id_mt'=>$id_mt]);

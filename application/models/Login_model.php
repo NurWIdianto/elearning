@@ -53,7 +53,7 @@ class Login_model extends CI_Model{
 
 	// fungsi untuk menampilkan matakuliah
 	public function upload_dosen($npd){
-		$sql = sprintf("select matkul.id_mt,matkul.nama from matkul join link_matkul_dosen on ( matkul.id_mt=link_matkul_dosen.id_mt and link_matkul_dosen.npd='%s')",
+		$sql = sprintf("call tampil_matkul_dosen('%s')",
 		$npd);
 		$query = $this->db->query($sql);
 		return $query->result();
@@ -62,10 +62,7 @@ class Login_model extends CI_Model{
 
 	// untuk menampilkan list mata kuliah 
 	public function matkul_lama($npd){
-		$sql= sprintf("select * from matkul where id_mt not in(select matkul.id_mt
-	from dosen join link_matkul_dosen on (link_matkul_dosen.npd=dosen.npd)
-			   join matkul on (link_matkul_dosen.id_mt=matkul.id_mt)
-			   where dosen.npd='%s')",$npd);
+		$sql= sprintf("call tampil_matkul_belum_diambil('%s')",$npd);
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
@@ -108,8 +105,7 @@ class Login_model extends CI_Model{
 
 	// untuk menampilkan table upload
 	public function matkul($id_mt,$npd){
-		$sql = sprintf("SELECT nama_file,keterangan 
-						from upload22 where id_mt='%s' and npd='%s'",
+		$sql = sprintf("call tampil_upload_dosen('%s','%s')",
 			$id_mt,
 			$npd);
 			$query = $this->db->query($sql);
@@ -119,7 +115,7 @@ class Login_model extends CI_Model{
 
 	// untuk menampilkan nama mata kuliah
 	public function lihat_matkul($id_mt){
-		$sql = sprintf("SELECT nama from matkul where id_mt='%s'",
+		$sql = sprintf("call tampil_nama_matkul('%s')",
 			$id_mt);
 			$query = $this->db->query($sql);
 			return $query->result();
@@ -244,7 +240,7 @@ class Login_model extends CI_Model{
 
 	// untuk menampilkan komentar
 	public function tampil_komentar($npd,$id_mt){
-		$sql = sprintf("select * from komentar where npd='%s' and id_mt='%s'",$npd, $id_mt);
+		$sql = sprintf("call tampil_komentar_dosen('%s','%s')",$npd, $id_mt);
 		$query = $this->db->query($sql);
 		return	$query->result();
 	}
